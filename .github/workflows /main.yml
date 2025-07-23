@@ -1,0 +1,92 @@
+
+name: Run on PR Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main   # or your target branch(es)
+
+jobs:
+  on-pr-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+           fetch-depth: 0
+
+      - name: Print PR info
+        run: |
+          echo "Pull request #${{ github.event.pull_request.number }} was merged into ${{ github.event.pull_request.base.ref }}"
+
+   #   - name: test
+   #     run: gh pr view ${{ github.event.pull_request.number }} --json files -q '.files[]'
+   #     env:
+   #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Changed Files Exporter
+        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c
+        id: changed-files
+
+           
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
+
+ #     - name: Pythonie
+ #       env:
+ #          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+ #          PR_NUMBER    : ${{ github.event.pull_request.number }}
+ #          REPO_NAME    : ${{ github.repository }}
+ #       run: |
+ #          cd /home/docker/check
+ #          python3 check.py
+
+
+      - name: Run tests in container
+        run: |
+          ls -l $RUNNER_TEMP
+          cd $GITHUB_WORKSPACE
+          ls -l 
+          docker run --rm --name generator -e ACTION=config \
+          -v /home/pioro/_work/_temp/:/workdir  \
+          -v /home/pioro/_work/_temp/:/output   \
+          -v /home/pioro/_work/_temp/:/config   \
+          -v /home/pioro/_work/dbgittests/dbgittests/:/dbcode \
+          pioro/syncer:latest \
+          --repopath /dbcode \
+          --outputroot /output \
+          --host 172.20.0.2 \
+          --port 1521 \
+          --service test19 \
+          --username $GEN_USER \
+          --sysdba \
+          --gitea_url http://a.a.a.a 
+
+      - name: Run tests in container 2nd
+        env:
+          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER    : ${{ github.event.pull_request.number }}
+          REPO_NAME    : ${{ github.repository }}
+        run: |
+            docker run -e GITEA_API="aa" \
+                       -e GITHUB_TOKEN=$GITHUB_TOKEN \
+                       -e PR_NUMBER=$PR_NUMBER \
+                       -e REPO_NAME=$REPO_NAME \
+                       -e DEPLOY_SCHEMA=$UTILTIES_USER \
+                       -e DEPLOY_SCHEMA_PASSWORD=$UTILTIES_PASS \
+                       -e ACTION=generateall \
+                       -e GENPASS=$GENPASS \
+                       -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
+                       -v /home/pioro/.ssh/config:/ssh/config \
+                       -v /home/pioro/_work/_temp/:/workdir  \
+                       -v /home/pioro/_work/_temp/:/output   \
+                       -v /home/pioro/_work/_temp/:/config   \
+                       -v /home/pioro/_work/dbgittests/dbgittests/:/dbcode \
+                       pioro/syncer:latest
