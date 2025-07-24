@@ -79,8 +79,8 @@ jobs:
                        -e GITHUB_TOKEN=$GITHUB_TOKEN \
                        -e PR_NUMBER=$PR_NUMBER \
                        -e REPO_NAME=$REPO_NAME \
-                       -e DEPLOY_SCHEMA=$UTILTIES_USER \
-                       -e DEPLOY_SCHEMA_PASSWORD=$UTILTIES_PASS \
+                       -e DEPLOY_SCHEMA=$UUTILITIES_USER \
+                       -e DEPLOY_SCHEMA_PASSWORD=$UTILITIES_PASS \
                        -e ACTION=generateall \
                        -e GENPASS=$GENPASS \
                        -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
