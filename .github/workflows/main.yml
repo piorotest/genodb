@@ -58,7 +58,7 @@ jobs:
           -v /home/pioro/_work/_temp/:/workdir  \
           -v /home/pioro/_work/_temp/:/output   \
           -v /home/pioro/_work/_temp/:/config   \
-          -v /home/pioro/_work/dbgittests/dbgittests/:/dbcode \
+          -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/:/dbcode \
           pioro/syncer:latest \
           --repopath /dbcode \
           --outputroot /output \
@@ -88,5 +88,5 @@ jobs:
                        -v /home/pioro/_work/_temp/:/workdir  \
                        -v /home/pioro/_work/_temp/:/output   \
                        -v /home/pioro/_work/_temp/:/config   \
-                       -v /home/pioro/_work/dbgittests/dbgittests/:/dbcode \
+                       -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/dbcode \
                        pioro/syncer:latest
