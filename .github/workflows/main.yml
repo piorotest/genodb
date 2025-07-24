@@ -65,7 +65,7 @@ jobs:
           --host 172.20.0.2 \
           --port 1521 \
           --service test19 \
-          --username $GEN_USER \
+          --username ${{ vars.GEN_USER }} \
           --sysdba \
           --gitea_url http://a.a.a.a 
 
@@ -79,10 +79,10 @@ jobs:
                        -e GITHUB_TOKEN=$GITHUB_TOKEN \
                        -e PR_NUMBER=$PR_NUMBER \
                        -e REPO_NAME=$REPO_NAME \
-                       -e DEPLOY_SCHEMA=$UTILITIES_USER \
-                       -e DEPLOY_SCHEMA_PASSWORD=$UTILITIES_PASS \
+                       -e DEPLOY_SCHEMA=${{ vars.UTILITIES_USER }}  \
+                       -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.UTILITIES_PASS }} \
                        -e ACTION=generateall \
-                       -e GENPASS=$GENPASS \
+                       -e GENPASS=${{ secrets.GENPASS }} \
                        -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
                        -v /home/pioro/.ssh/config:/ssh/config \
                        -v /home/pioro/_work/_temp/:/workdir  \
