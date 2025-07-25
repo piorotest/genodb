@@ -55,9 +55,9 @@ jobs:
           cd $GITHUB_WORKSPACE
           ls -l 
           docker run --rm --name generator -e ACTION=config \
-          -v /home/pioro/_work/_temp/:/workdir  \
+          -v /home/pioro/workdir:/workdir  \
           -v /home/pioro/output:/output   \
-          -v /home/pioro/_work/_temp/:/config   \
+          -v /home/pioro/workdir:/config   \
           -v $GITHUB_WORKSPACE/:/dbcode \
           pioro/syncer:latest \
           --repopath /dbcode \
@@ -85,9 +85,9 @@ jobs:
                        -e GENPASS=${{ secrets.GENPASS }} \
                        -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
                        -v /home/pioro/.ssh/config:/ssh/config \
-                       -v /home/pioro/_work/_temp/:/workdir  \
+                       -v /home/pioro/workdir:/workdir  \
                        -v /home/pioro/output/:/output   \
-                       -v /home/pioro/_work/_temp/:/config   \
+                       -v /home/pioro/workdir:/config   \
                        -v $GITHUB_WORKSPACE:/dbcode \
                        pioro/syncer:latest
 
