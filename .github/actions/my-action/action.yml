@@ -1,0 +1,21 @@
+name: "Action With Env Variables"
+description: "A Docker GitHub Action that passes inputs as environment variables"
+inputs:
+  username:
+    description: "User name for greeting"
+    required: false
+    default: "world"
+  token:
+    description: "An authentication token"
+    required: false
+  marcin:
+    description: "marcin"
+    required: false
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    USERNAME: ${{ inputs.username }}
+    TOKEN: ${{ inputs.token }}
+  args:
+    - ${{ inputs.marcin }}

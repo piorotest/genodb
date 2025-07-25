@@ -49,48 +49,54 @@ jobs:
  #          python3 check.py
 
 
-      - name: Run tests in container
-        run: |
-          ls -l $RUNNER_TEMP
-          cd $GITHUB_WORKSPACE
-          ls -l 
-          docker run --rm --name generator -e ACTION=config \
-          -v /home/pioro/_work/_temp/:/workdir  \
-          -v /home/pioro/_work/_temp/:/output   \
-          -v /home/pioro/_work/_temp/:/config   \
-          -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/:/dbcode \
-          pioro/syncer:latest \
-          --repopath /dbcode \
-          --outputroot /output \
-          --host docker \
-          --port 1521 \
-          --service test19 \
-          --username ${{ vars.GEN_USER }} \
-          --sysdba \
-          --gitea_url http://a.a.a.a 
+      # - name: Run tests in container
+      #   run: |
+      #     ls -l $RUNNER_TEMP
+      #     cd $GITHUB_WORKSPACE
+      #     ls -l 
+      #     docker run --rm --name generator -e ACTION=config \
+      #     -v /home/pioro/_work/_temp/:/workdir  \
+      #     -v /home/pioro/_work/_temp/:/output   \
+      #     -v /home/pioro/_work/_temp/:/config   \
+      #     -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/:/dbcode \
+      #     pioro/syncer:latest \
+      #     --repopath /dbcode \
+      #     --outputroot /output \
+      #     --host docker \
+      #     --port 1521 \
+      #     --service test19 \
+      #     --username ${{ vars.GEN_USER }} \
+      #     --sysdba \
+      #     --gitea_url http://a.a.a.a 
 
-      - name: Run tests in container 2nd
-        env:
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER    : ${{ github.event.pull_request.number }}
-          REPO_NAME    : ${{ github.repository }}
-        run: |
-            docker run -e GITEA_API="aa" \
-                       -e GITHUB_TOKEN=$GITHUB_TOKEN \
-                       -e PR_NUMBER=$PR_NUMBER \
-                       -e REPO_NAME=$REPO_NAME \
-                       -e DEPLOY_SCHEMA=${{ vars.UTILITIES_USER }}  \
-                       -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.UTILITIES_PASS }} \
-                       -e ACTION=generateall \
-                       -e GENPASS=${{ secrets.GENPASS }} \
-                       -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
-                       -v /home/pioro/.ssh/config:/ssh/config \
-                       -v /home/pioro/_work/_temp/:/workdir  \
-                       -v /home/pioro/_work/_temp/:/output   \
-                       -v /home/pioro/_work/_temp/:/config   \
-                       -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/dbcode \
-                       pioro/syncer:latest
+      # - name: Run tests in container 2nd
+      #   env:
+      #     GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+      #     PR_NUMBER    : ${{ github.event.pull_request.number }}
+      #     REPO_NAME    : ${{ github.repository }}
+      #   run: |
+      #       docker run -e GITEA_API="aa" \
+      #                  -e GITHUB_TOKEN=$GITHUB_TOKEN \
+      #                  -e PR_NUMBER=$PR_NUMBER \
+      #                  -e REPO_NAME=$REPO_NAME \
+      #                  -e DEPLOY_SCHEMA=${{ vars.UTILITIES_USER }}  \
+      #                  -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.UTILITIES_PASS }} \
+      #                  -e ACTION=generateall \
+      #                  -e GENPASS=${{ secrets.GENPASS }} \
+      #                  -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
+      #                  -v /home/pioro/.ssh/config:/ssh/config \
+      #                  -v /home/pioro/_work/_temp/:/workdir  \
+      #                  -v /home/pioro/_work/_temp/:/output   \
+      #                  -v /home/pioro/_work/_temp/:/config   \
+      #                  -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/dbcode \
+      #                  pioro/syncer:latest
 
+      - name: Run my action
+        uses: ./.github/actions/my-action/
+        with:
+          username: "Alice"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          marcin: "dupa"
 
       - name: Generate list using Markdown
         run: |
@@ -99,3 +105,5 @@ jobs:
           echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
+
+
