@@ -3,6 +3,7 @@
  a varchar2(1000);
  -- comment2222212121111111444444444444111
  -- now 6
+ -- ssss
 
 BEGIN
   UTIL_LOG.START_TRACE ( 'TEST_EXC', '', 2);  
