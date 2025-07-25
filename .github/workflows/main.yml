@@ -56,9 +56,9 @@ jobs:
           ls -l 
           docker run --rm --name generator -e ACTION=config \
           -v /home/pioro/_work/_temp/:/workdir  \
-          -v /home/pioro/_work/_temp/:/output   \
+          -v /home/pioro/output:/output   \
           -v /home/pioro/_work/_temp/:/config   \
-          -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/:/dbcode \
+          -v $GITHUB_WORKSPACE/:/dbcode \
           pioro/syncer:latest \
           --repopath /dbcode \
           --outputroot /output \
@@ -86,9 +86,9 @@ jobs:
                        -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
                        -v /home/pioro/.ssh/config:/ssh/config \
                        -v /home/pioro/_work/_temp/:/workdir  \
-                       -v /home/pioro/_work/_temp/:/output   \
+                       -v /home/pioro/output/:/output   \
                        -v /home/pioro/_work/_temp/:/config   \
-                       -v /home/pioro/_work/${{ github.event.repository.name }}/${{ github.event.repository.name }}:/dbcode \
+                       -v $GITHUB_WORKSPACE:/dbcode \
                        pioro/syncer:latest
 
       - name: Run my action
