@@ -3,9 +3,10 @@
  a varchar2(1000);
  -- comment2222212121111111444444444444111
  -- now 6
- -- ssss1111wwwwwww11111
+ -- ssss1111wwwwwww11111wwwww
 
 BEGIN
+  --w:=a;
   UTIL_LOG.START_TRACE ( 'TEST_EXC', '', 2);  
   select dirname into a from jobs where dirname = 'asd';
   UTIL_LOG.STOP_TRACE;
