@@ -6,7 +6,6 @@
  -- ssss1111wwwwwww11111
 
 BEGIN
-  w:=a;
   UTIL_LOG.START_TRACE ( 'TEST_EXC', '', 2);  
   select dirname into a from jobs where dirname = 'asd';
   UTIL_LOG.STOP_TRACE;
