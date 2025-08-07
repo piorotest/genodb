@@ -49,15 +49,15 @@ jobs:
  #          python3 check.py
 
 
-      - name: Run tests in container
+      - name: Configure runner
         run: |
           ls -l $RUNNER_TEMP
           cd $GITHUB_WORKSPACE
           ls -l 
           docker run --rm --name generator -e ACTION=config \
-          -v /home/pioro/workdir:/workdir  \
+          -v $RUNNER_TEMP:/workdir  \
           -v /home/pioro/output:/output   \
-          -v /home/pioro/workdir:/config   \
+          -v $RUNNER_TEMP:/config   \
           -v $GITHUB_WORKSPACE/:/dbcode \
           pioro/syncer:latest \
           --repopath /dbcode \
@@ -67,9 +67,8 @@ jobs:
           --service ${{ vars.TARGET_SERVICE }} \
           --username ${{ vars.GEN_USER }} \
           --sysdba \
-          --gitea_url http://a.a.a.a 
 
-      - name: Run tests in container 2nd
+      - name: Deploy code
         env:
           GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER    : ${{ github.event.pull_request.number }}
@@ -83,9 +82,9 @@ jobs:
                        -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.SCHEMA_OWNER1 }} \
                        -e ACTION=generateall \
                        -e GENPASS=${{ secrets.GENPASS }} \
-                       -v /home/pioro/workdir:/workdir  \
+                       -v $RUNNER_TEMP:/workdir  \
                        -v /home/pioro/output/:/output   \
-                       -v /home/pioro/workdir:/config   \
+                       -v $RUNNER_TEMP:/config   \
                        -v $GITHUB_WORKSPACE:/dbcode \
                        pioro/syncer:latest
 
