@@ -1,0 +1,8 @@
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "PIORO"."TEST2" is
+begin 
+ null;
+ -- test 234444111333344443333333
+ dupa;
+end;
+/
