@@ -3,7 +3,7 @@
  a varchar2(1000);
  -- comment2222212121111111444444444444111
  -- now 6
- -- ssss1111wwwwwww11111wwwww
+ -- ssss1111wwwwwww11111wwwwwweeweeee
 
 BEGIN
   --w:=a;
