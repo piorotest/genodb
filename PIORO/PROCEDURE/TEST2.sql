@@ -3,6 +3,6 @@
 begin 
  null;
  -- test 2344441113333422222224443333333
- dupa;
+ --dupa;
 end;
 /
