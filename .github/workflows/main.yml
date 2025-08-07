@@ -87,6 +87,7 @@ jobs:
                        -v $RUNNER_TEMP:/config   \
                        -v $GITHUB_WORKSPACE:/dbcode \
                        pioro/syncer:latest
+        continue-on-error: true
 
       - name: Run my action
         uses: ./.github/actions/my-action/
@@ -94,6 +95,7 @@ jobs:
           username: "Alice"
           token: ${{ secrets.GITHUB_TOKEN }}
           marcin: "dupa"
+        if: always()
 
       - name: Generate list using Markdown
         run: |
@@ -102,5 +104,5 @@ jobs:
           echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
           echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
-
+        if: always()
 
