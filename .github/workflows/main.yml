@@ -75,16 +75,14 @@ jobs:
           PR_NUMBER    : ${{ github.event.pull_request.number }}
           REPO_NAME    : ${{ github.repository }}
         run: |
-            docker run -e GITEA_API="aa" \
+            docker run  \
                        -e GITHUB_TOKEN=$GITHUB_TOKEN \
                        -e PR_NUMBER=$PR_NUMBER \
                        -e REPO_NAME=$REPO_NAME \
-                       -e DEPLOY_SCHEMA=${{ vars.UTILITIES_USER }}  \
-                       -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.UTILITIES_PASS }} \
+                       -e DEPLOY_SCHEMA=${{ vars.SCHEMA_OWNER1 }}  \
+                       -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.SCHEMA_OWNER1 }} \
                        -e ACTION=generateall \
                        -e GENPASS=${{ secrets.GENPASS }} \
-                       -v /home/pioro/.ssh/id_rsa_robot:/ssh/id_rsa.docker \
-                       -v /home/pioro/.ssh/config:/ssh/config \
                        -v /home/pioro/workdir:/workdir  \
                        -v /home/pioro/output/:/output   \
                        -v /home/pioro/workdir:/config   \
