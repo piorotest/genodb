@@ -101,6 +101,10 @@ jobs:
 
 
       - name: Generate list using Markdown
+        env:
+          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER    : ${{ github.event.pull_request.number }}
+          REPO_NAME    : ${{ github.repository }}
         run: |
           echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
 
