@@ -62,9 +62,9 @@ jobs:
           pioro/syncer:latest \
           --repopath /dbcode \
           --outputroot /output \
-          --host docker \
-          --port 1521 \
-          --service test19 \
+          --host ${{ vars.TARGET_SERVER }} \
+          --port ${{ vars.TARGET_PORT }} \
+          --service ${{ vars.TARGET_SERVICE }} \
           --username ${{ vars.GEN_USER }} \
           --sysdba \
           --gitea_url http://a.a.a.a 
