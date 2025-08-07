@@ -97,12 +97,26 @@ jobs:
           marcin: "dupa"
         if: always()
 
+
+
+
       - name: Generate list using Markdown
         run: |
           echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY # this is a blank line
-          echo "- Lets add a bullet point" >> $GITHUB_STEP_SUMMARY
-          echo "- Lets add a second bullet point" >> $GITHUB_STEP_SUMMARY
-          echo "- How about a third one?" >> $GITHUB_STEP_SUMMARY
+
+          docker run  \
+                      -e GITHUB_TOKEN=$GITHUB_TOKEN \
+                      -e PR_NUMBER=$PR_NUMBER \
+                      -e REPO_NAME=$REPO_NAME \
+                      -e ACTION=report \
+                      -e GENPASS=${{ secrets.GENPASS }} \
+                      -v $RUNNER_TEMP:/workdir  \
+                      -v /home/pioro/output/:/output   \
+                      -v $RUNNER_TEMP:/config   \
+                      -v $GITHUB_WORKSPACE:/dbcode \
+                      pioro/syncer:latest --sources target
+
+          cat $RUNNER_TEMP/report.md >> $GITHUB_STEP_SUMMARY
+
         if: always()
 
