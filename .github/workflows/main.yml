@@ -123,10 +123,10 @@ jobs:
                       -e REPO_NAME=$REPO_NAME \
                       -e ACTION=report \
                       -e GENPASS=${{ secrets.GENPASS }} \
-                      -v $RUNNER_TEMP:/workdir  \
-                      -v /home/pioro/output/:/output   \
-                      -v $RUNNER_TEMP:/config   \
-                      -v $GITHUB_WORKSPACE:/dbcode \
+                       -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
+                       -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
+                       -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
+                       -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
                       pioro/syncer:latest --sources target
 
           cat $RUNNER_TEMP/report.md >> $GITHUB_STEP_SUMMARY
