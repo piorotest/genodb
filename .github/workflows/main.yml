@@ -133,7 +133,7 @@ jobs:
                        -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
                       pioro/syncer:latest --sources target
 
-          cat $RUNNER_TEMP/report.md >> $GITHUB_STEP_SUMMARY
+          cat $RUNNER_TEMP/_github_workflow/report.md >> $GITHUB_STEP_SUMMARY
 
         if: always()
 
