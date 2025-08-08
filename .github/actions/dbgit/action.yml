@@ -26,10 +26,7 @@ inputs:
     description: "Repository name"
     required: true
 
-  output_directory:
-    description: "output_directory for the action"
-    required: false
-    default: "/github/workflow"
+
 
 
 runs:
