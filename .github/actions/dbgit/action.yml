@@ -1,0 +1,43 @@
+name: "dbgit"
+description: "A GitHub action that interacts with a database and GitHub"
+inputs:
+  deploy_schema:
+    description: "The schema to deploy"
+    required: true
+  deploy_schema_password:
+    description: "The password for the schema"
+    required: true
+  action:
+    description: "The action to perform"
+    required: true
+  genpass:
+    description: "Password for generator user"
+    required: true
+  output_directory:
+    description: "Artifact output directory"
+    required: true
+
+
+runs:
+  using: "docker"
+  image: "pioro/syncer:latest"
+  env:
+    GITHUB_TOKEN          : ${{ secrets.GITHUB_TOKEN }}
+    PR_NUMBER             : ${{ github.event.pull_request.number }}
+    REPO_NAME             : ${{ github.repository }}
+    DEPLOY_SCHEMA         : ${{ inputs.deploy_schema }}
+    DEPLOY_SCHEMA_PASSWORD: ${{ inputs.deploy_schema_password }}
+    ACTION                : ${{ inputs.action }}
+    GENPASS               : ${{ inputs.genpass }}
+    OUTPUT_DIRECTORY      : ${{ inputs.output_directory }}
+  options: >
+    -v $RUNNER_TEMP:/workdir  
+    -v $OUTPUT_DIRECTORY:/output   
+    -v $RUNNER_TEMP:/config   
+    -v $GITHUB_WORKSPACE:/dbcode 
+
+
+
+
+
+                       
