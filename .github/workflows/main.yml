@@ -49,23 +49,36 @@ jobs:
  #          python3 check.py
 
 
-      - name: Configure runner
-        run: |
-          docker run --rm --name generator -e ACTION=config \
-          -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
-          -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
-          -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
-          -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
-          pioro/syncer:latest \
-          --repopath /github/workspace \
-          --outputroot /github/workflow \
-          --host ${{ vars.TARGET_SERVER }} \
-          --port ${{ vars.TARGET_PORT }} \
-          --service ${{ vars.TARGET_SERVICE }} \
-          --username ${{ vars.GEN_USER }} \
-          --sysdba 
+      # - name: Configure runner
+      #   run: |
+      #     docker run --rm --name generator -e ACTION=config \
+      #     -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
+      #     -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
+      #     -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
+      #     -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
+      #     pioro/syncer:latest \
+      #     --repopath /github/workspace \
+      #     --outputroot /github/workflow \
+      #     --host ${{ vars.TARGET_SERVER }} \
+      #     --port ${{ vars.TARGET_PORT }} \
+      #     --service ${{ vars.TARGET_SERVICE }} \
+      #     --username ${{ vars.GEN_USER }} \
+      #     --sysdba 
 
-          cat /home/pioro/runner_os/_work/_temp/_github_workflow/.genconfig.json
+      #     cat /home/pioro/runner_os/_work/_temp/_github_workflow/.genconfig.json
+
+      - name: configure runner
+        uses: ./.github/actions/dbgit/
+        with:
+          deploy_schema: ${{ vars.SCHEMA_OWNER1 }}
+          deploy_schema_password: ${{ vars.SCHEMA_OWNER1 }}
+          action: "config"
+          genpass: ${{ secrets.GENPASS }}
+          output_directory: "/home/pioro/output"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_number: ${{ github.event.pull_request.number }}
+          repo_name: ${{ github.repository }}
+        continue-on-error: true
 
 
       # - name: Deploy code

@@ -26,6 +26,11 @@ inputs:
     description: "Repository name"
     required: true
 
+  output_directory:
+    description: "output_directory for the action"
+    required: false
+    default: "/github/workflow"
+
 
 runs:
   using: "docker"
@@ -39,6 +44,15 @@ runs:
     ACTION                : ${{ inputs.action }}
     GENPASS               : ${{ inputs.genpass }}
     OUTPUT_DIRECTORY      : ${{ inputs.output_directory }}
+  args:
+    - --outputroot ${{ inputs.output_directory }}
+    - --sysdba
+    - --repopath /github/workspace
+    - --host docker
+    - --port 1521
+    - --service target
+    - --username sys 
+
 
 
 
