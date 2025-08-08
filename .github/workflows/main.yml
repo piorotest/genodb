@@ -51,11 +51,11 @@ jobs:
 
       - name: Configure runner
         run: |
-          ls -ld $GITHUB_WORKFLOW
-          echo "RUNNER_TEMP: $GITHUB_WORKFLOW"
           docker run --rm --name generator -e ACTION=config \
-          -v $GITHUB_WORKFLOW:/workdir  \
-          -v $GITHUB_WORKFLOW:/config   \
+          -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
+          -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
+          -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
+          -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
           pioro/syncer:docker \
           --repopath /github/workspace \
           --outputroot /github/workflow \
@@ -64,7 +64,6 @@ jobs:
           --service ${{ vars.TARGET_SERVICE }} \
           --username ${{ vars.GEN_USER }} \
           --sysdba 
-          ls -la $GITHUB_WORKFLOW
 
 
       - name: Deploy code
@@ -81,8 +80,10 @@ jobs:
                        -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.SCHEMA_OWNER1 }} \
                        -e ACTION=generateall \
                        -e GENPASS=${{ secrets.GENPASS }} \
-                       -v $GITHUB_WORKFLOW:/workdir  \
-                       -v $RUNNER_TEMP:/config   \
+                       -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
+                       -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
+                       -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
+                       -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
                        pioro/syncer:docker
         continue-on-error: true
 
