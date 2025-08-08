@@ -4,7 +4,7 @@ begin
  null;
  -- test 234444111333342222222444333333332134242424
  dupa; --ssss
- -- nowy code sssssssss
+ -- nowy code sssssssss wwwwww ssss
  -- nowszy code
 end;
 /
