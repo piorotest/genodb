@@ -65,6 +65,8 @@ jobs:
           --username ${{ vars.GEN_USER }} \
           --sysdba 
 
+          cat /home/pioro/runner_os/_work/_temp/_github_workflow/.config.json
+
 
       - name: Deploy code
         env:
@@ -72,6 +74,7 @@ jobs:
           PR_NUMBER    : ${{ github.event.pull_request.number }}
           REPO_NAME    : ${{ github.repository }}
         run: |
+            cat /home/pioro/runner_os/_work/_temp/_github_workflow/.config.json
             docker run  \
                        -e GITHUB_TOKEN=$GITHUB_TOKEN \
                        -e PR_NUMBER=$PR_NUMBER \
@@ -85,6 +88,7 @@ jobs:
                        -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
                        -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
                        pioro/syncer:latest
+            ls -la /home/pioro/runner_os/_work/_temp/_github_workflow/
         continue-on-error: true
 
       # - name: Deploy code
@@ -116,7 +120,7 @@ jobs:
           REPO_NAME    : ${{ github.repository }}
         run: |
           echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
-
+          ls -la /home/pioro/runner_os/_work/_temp/_github_workflow/
           docker run  \
                       -e GITHUB_TOKEN=$GITHUB_TOKEN \
                       -e PR_NUMBER=$PR_NUMBER \
