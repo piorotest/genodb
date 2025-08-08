@@ -56,7 +56,7 @@ jobs:
           -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
           -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
           -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
-          pioro/syncer:docker \
+          pioro/syncer:latest \
           --repopath /github/workspace \
           --outputroot /github/workflow \
           --host ${{ vars.TARGET_SERVER }} \
@@ -84,7 +84,7 @@ jobs:
                        -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
                        -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
                        -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
-                       pioro/syncer:docker
+                       pioro/syncer:latest
         continue-on-error: true
 
       # - name: Deploy code
