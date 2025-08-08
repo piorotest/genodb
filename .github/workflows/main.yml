@@ -51,6 +51,8 @@ jobs:
 
       - name: Configure runner
         run: |
+          ls -ld $RUNNER_TEMP
+          echo "RUNNER_TEMP: $RUNNER_TEMP"
           docker run --rm --name generator -e ACTION=config \
           -v /github/workflow:/workdir  \
           -v /github/workflow:/config   \
