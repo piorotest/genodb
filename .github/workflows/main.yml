@@ -65,7 +65,7 @@ jobs:
           --username ${{ vars.GEN_USER }} \
           --sysdba 
 
-          cat /home/pioro/runner_os/_work/_temp/_github_workflow/.config.json
+          cat /home/pioro/runner_os/_work/_temp/_github_workflow/.genconfig.json
 
 
       - name: Deploy code
@@ -74,7 +74,7 @@ jobs:
           PR_NUMBER    : ${{ github.event.pull_request.number }}
           REPO_NAME    : ${{ github.repository }}
         run: |
-            cat /home/pioro/runner_os/_work/_temp/_github_workflow/.config.json
+            cat /home/pioro/runner_os/_work/_temp/_github_workflow/.genconfig.json
             docker run  \
                        -e GITHUB_TOKEN=$GITHUB_TOKEN \
                        -e PR_NUMBER=$PR_NUMBER \
