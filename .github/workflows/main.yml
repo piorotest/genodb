@@ -96,7 +96,7 @@ jobs:
           deploy_schema_password: ${{ vars.SCHEMA_OWNER1 }}
           action: "generateall"
           genpass: ${{ secrets.GENPASS }}
-          output_directory: "/home/pioro/output
+          output_directory: "/home/pioro/output"
         continue-on-error: true
 
 
