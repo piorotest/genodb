@@ -16,25 +16,30 @@ inputs:
   output_directory:
     description: "Artifact output directory"
     required: true
+  github_token:
+    description: "GitHub token"
+    required: true
+  pr_number:
+    description: "Pull request number"
+    required: true
+  repo_name:
+    description: "Repository name"
+    required: true
 
 
 runs:
   using: "docker"
   image: "pioro/syncer:latest"
   env:
-    GITHUB_TOKEN          : ${{ secrets.GITHUB_TOKEN }}
-    PR_NUMBER             : ${{ github.event.pull_request.number }}
-    REPO_NAME             : ${{ github.repository }}
+    GITHUB_TOKEN          : ${{ inputs.github_token }}
+    PR_NUMBER             : ${{ inputs.pr_number }}
+    REPO_NAME             : ${{ inputs.repo_name }}
     DEPLOY_SCHEMA         : ${{ inputs.deploy_schema }}
     DEPLOY_SCHEMA_PASSWORD: ${{ inputs.deploy_schema_password }}
     ACTION                : ${{ inputs.action }}
     GENPASS               : ${{ inputs.genpass }}
     OUTPUT_DIRECTORY      : ${{ inputs.output_directory }}
-  options: >
-    -v $RUNNER_TEMP:/workdir  
-    -v $OUTPUT_DIRECTORY:/output   
-    -v $RUNNER_TEMP:/config   
-    -v $GITHUB_WORKSPACE:/dbcode 
+
 
 
 

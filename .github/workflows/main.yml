@@ -99,6 +99,9 @@ jobs:
           action: "generateall"
           genpass: ${{ secrets.GENPASS }}
           output_directory: "/home/pioro/output"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_number: ${{ github.event.pull_request.number }}
+          repo_name: ${{ github.repository }}
         continue-on-error: true
 
 
