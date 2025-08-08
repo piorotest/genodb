@@ -51,11 +51,11 @@ jobs:
 
       - name: Configure runner
         run: |
-          ls -ld $RUNNER_TEMP
-          echo "RUNNER_TEMP: $RUNNER_TEMP"
+          ls -ld $GITHUB_WORKFLOW
+          echo "RUNNER_TEMP: $GITHUB_WORKFLOW"
           docker run --rm --name generator -e ACTION=config \
-          -v /github/workflow:/workdir  \
-          -v $RUNNER_TEMP:/config   \
+          -v $GITHUB_WORKFLOW:/workdir  \
+          -v $GITHUB_WORKFLOW:/config   \
           pioro/syncer:docker \
           --repopath /github/workspace \
           --outputroot /github/workflow \
@@ -64,7 +64,7 @@ jobs:
           --service ${{ vars.TARGET_SERVICE }} \
           --username ${{ vars.GEN_USER }} \
           --sysdba 
-          ls -la $RUNNER_TEMP
+          ls -la $GITHUB_WORKFLOW
 
 
       - name: Deploy code
@@ -81,7 +81,7 @@ jobs:
                        -e DEPLOY_SCHEMA_PASSWORD=${{ secrets.SCHEMA_OWNER1 }} \
                        -e ACTION=generateall \
                        -e GENPASS=${{ secrets.GENPASS }} \
-                       -v /github/workflow:/workdir  \
+                       -v $GITHUB_WORKFLOW:/workdir  \
                        -v $RUNNER_TEMP:/config   \
                        pioro/syncer:docker
         continue-on-error: true
