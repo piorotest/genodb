@@ -126,7 +126,7 @@ jobs:
 
       - name: Generate list using Markdown
         run: |
-          cp $RUNNER_TEMP/_github_workflow/* /tmp
+          cp -r $RUNNER_TEMP/_github_workflow/* /tmp
           ls -l $RUNNER_TEMP/_github_workflow/
           cat $RUNNER_TEMP/_github_workflow/report.md
           cat $RUNNER_TEMP/_github_workflow/report.md >> $GITHUB_STEP_SUMMARY
