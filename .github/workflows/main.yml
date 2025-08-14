@@ -119,6 +119,9 @@ jobs:
         with:
           action: "report"
           database_service: target
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_number: ${{ github.event.pull_request.number }}
+          repo_name: ${{ github.repository }}
         if: always()
 
       - name: Generate list using Markdown
