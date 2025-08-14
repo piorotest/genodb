@@ -26,18 +26,18 @@ jobs:
    #     env:
    #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Changed Files Exporter
-        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c
-        id: changed-files
+      # - name: Changed Files Exporter
+      #   uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c
+      #   id: changed-files
 
            
-      - name: List all changed files
-        env:
-          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-        run: |
-          for file in ${ALL_CHANGED_FILES}; do
-            echo "$file was changed"
-          done
+      # - name: List all changed files
+      #   env:
+      #     ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+      #   run: |
+      #     for file in ${ALL_CHANGED_FILES}; do
+      #       echo "$file was changed"
+      #     done
 
  #     - name: Pythonie
  #       env:
@@ -70,14 +70,12 @@ jobs:
       - name: configure runner
         uses: ./.github/actions/dbgit/
         with:
-          deploy_schema: ${{ vars.SCHEMA_OWNER1 }}
-          deploy_schema_password: ${{ vars.SCHEMA_OWNER1 }}
           action: "config"
-          genpass: ${{ secrets.GENPASS }}
-          output_directory: "/home/pioro/output"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          pr_number: ${{ github.event.pull_request.number }}
-          repo_name: ${{ github.repository }}
+          sysdba: "true"
+          database_host: docker
+          database_port: 1521
+          database_service: target
+          genusername: sys
         continue-on-error: true
 
 
@@ -111,44 +109,20 @@ jobs:
           deploy_schema_password: ${{ vars.SCHEMA_OWNER1 }}
           action: "generateall"
           genpass: ${{ secrets.GENPASS }}
-          output_directory: "/home/pioro/output"
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_number: ${{ github.event.pull_request.number }}
           repo_name: ${{ github.repository }}
         continue-on-error: true
 
-
-      - name: Run my action
-        uses: ./.github/actions/my-action/
+      - name: Deploy code
+        uses: ./.github/actions/dbgit/
         with:
-          username: "Alice"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          marcin: "dupa"
+          action: "report"
+          database_service: target
         if: always()
 
-
-
-
       - name: Generate list using Markdown
-        env:
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }}
-          PR_NUMBER    : ${{ github.event.pull_request.number }}
-          REPO_NAME    : ${{ github.repository }}
         run: |
-          echo "This is the lead in sentence for the list" >> $GITHUB_STEP_SUMMARY
-          ls -la /home/pioro/runner_os/_work/_temp/_github_workflow/
-          docker run  \
-                      -e GITHUB_TOKEN=$GITHUB_TOKEN \
-                      -e PR_NUMBER=$PR_NUMBER \
-                      -e REPO_NAME=$REPO_NAME \
-                      -e ACTION=report \
-                      -e GENPASS=${{ secrets.GENPASS }} \
-                       -v "/home/pioro/runner_os/_work/_temp/_github_home":"/github/home" \
-                       -v "/home/pioro/runner_os/_work/_temp/_github_workflow":"/github/workflow" \
-                       -v "/home/pioro/runner_os/_work/_temp/_runner_file_commands":"/github/file_commands" \
-                       -v "/home/pioro/runner_os/_work/genodb/genodb":"/github/workspace" \
-                      pioro/syncer:latest --sources target
-
           cat $RUNNER_TEMP/_github_workflow/report.md >> $GITHUB_STEP_SUMMARY
 
         if: always()

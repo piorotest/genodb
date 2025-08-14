@@ -3,35 +3,52 @@ description: "A GitHub action that interacts with a database and GitHub"
 inputs:
   deploy_schema:
     description: "The schema to deploy"
-    required: true
+    required: false
   deploy_schema_password:
     description: "The password for the schema"
-    required: true
+    required: false
   action:
     description: "The action to perform"
     required: true
   genpass:
     description: "Password for generator user"
-    required: true
+    required: false
+  genusername:
+    description: "Username for generator user"
+    required: false
   output_directory:
     description: "Artifact output directory"
-    required: true
+    required: false
   github_token:
     description: "GitHub token"
-    required: true
+    required: false
   pr_number:
     description: "Pull request number"
-    required: true
+    required: false
   repo_name:
     description: "Repository name"
-    required: true
-
+    required: false
+  database_port:
+    description: "Database port"
+    required: false
+  sysdba:
+    description: "User type"
+    required: false
+  database_host:
+    description: "Database host"
+    required: false
+  database_service:
+    description: "Database service"
+    required: false
+  rollback:
+    description: "Rollback option"
+    required: false
 
 
 
 runs:
   using: "docker"
-  image: "pioro/syncer:latest"
+  image: "pioro/syncer:github"
   env:
     GITHUB_TOKEN          : ${{ inputs.github_token }}
     PR_NUMBER             : ${{ inputs.pr_number }}
@@ -40,15 +57,16 @@ runs:
     DEPLOY_SCHEMA_PASSWORD: ${{ inputs.deploy_schema_password }}
     ACTION                : ${{ inputs.action }}
     GENPASS               : ${{ inputs.genpass }}
-    OUTPUT_DIRECTORY      : ${{ inputs.output_directory }}
-  args:
-    - --outputroot ${{ inputs.output_directory }}
-    - --sysdba
-    - --repopath /github/workspace
-    - --host docker
-    - --port 1521
-    - --service target
-    - --username sys 
+    OUTPUT_DIRECTORY      : /github/workflow
+    SYSDBA                : ${{ inputs.sysdba }}
+    REPOPATH              : /github/workspace
+    HOST                  : ${{ inputs.database_host }}
+    PORT                  : ${{ inputs.database_port }}
+    SERVICE               : ${{ inputs.database_service }}
+    USERNAME              : ${{ inputs.genusername }}
+    ROLLBACK              : ${{ inputs.rollback }}
+    WORKSPACE             : /github/workflow
+
 
 
 
