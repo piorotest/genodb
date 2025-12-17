@@ -1,4 +1,4 @@
-create or 12 replace procedure test3 is
+create or replace procedure test3 is
 begin
  null;
  -- proc 3
