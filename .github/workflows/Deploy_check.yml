@@ -32,3 +32,22 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_number: ${{ github.event.pull_request.number }}
           repo_name: ${{ github.repository }}
+
+      - name: Generate report
+        uses: ./.github/actions/dbgit/
+        with:
+          action: "report"
+          database_service: ${{ vars.TARGET_SERVICE }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          pr_number: ${{ github.event.pull_request.number }}
+          repo_name: ${{ github.repository }}
+        if: always()
+
+      - name: Generate list using Markdown
+        run: |
+          cp -r $RUNNER_TEMP/_github_workflow/* /tmp
+          ls -l $RUNNER_TEMP/_github_workflow/
+          cat $RUNNER_TEMP/_github_workflow/report.md
+          cat $RUNNER_TEMP/_github_workflow/report.md >> $GITHUB_STEP_SUMMARY
+
+        if: always()
