@@ -1,1 +1,1 @@
-create synonym syn for tableslon;
+create synonym syn for tableslon
