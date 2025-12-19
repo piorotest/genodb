@@ -1,1 +1,1 @@
-create synonym t1syn to 1;
+create synonym syn for tableslon;
