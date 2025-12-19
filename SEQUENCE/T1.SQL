@@ -1,1 +1,1 @@
-create sequence t1;
+create sequence t1
