@@ -1,4 +1,4 @@
-CREATE OR REPLACE  PACKAGE BODY P_DEMO AS
+CREATE OR REPLACE  PACKAGE BODY p_test AS
 /******************************************************************************
    NAME:       P_DEMO
    PURPOSE:
@@ -15,5 +15,5 @@ CREATE OR REPLACE  PACKAGE BODY P_DEMO AS
         NULL;
     END ret_example_table;
 
-end P_DEMO;
+end p_test;
 /
