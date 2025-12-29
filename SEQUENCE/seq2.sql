@@ -1,0 +1,1 @@
+create sequence seq2 minvalue 10
