@@ -1,1 +1,1 @@
-create synonym syn for tableslon
+create or replace synonym syn for tableslon
