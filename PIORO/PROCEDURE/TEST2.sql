@@ -6,5 +6,6 @@ begin
 -- dupa; --ssss sssss wwwwww
  -- nowy code sssssssss wwwwww ssssssss
  -- nowszy code 3333333
+  -- ale commit
 end;
 /
