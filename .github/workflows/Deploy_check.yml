@@ -19,7 +19,7 @@ jobs:
           sysdba: "true"
           database_host: docker
           database_port: 1521
-          database_service: target
+          database_service: pdb1
           genusername: sys
 
       - name: Check code against checkdb
