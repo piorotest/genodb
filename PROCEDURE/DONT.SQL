@@ -1,0 +1,6 @@
+
+  CREATE OR REPLACE EDITIONABLE PROCEDURE "PIORO"."DONT" as 
+begin
+null;
+end;
+/
