@@ -37,7 +37,7 @@ jobs:
         uses: ./.github/actions/dbgit/
         with:
           action: "report"
-          database_service: ${{ vars.TARGET_SERVICE }}
+          database_service: pdb1
           github_token: ${{ secrets.GITHUB_TOKEN }}
           pr_number: ${{ github.event.pull_request.number }}
           repo_name: ${{ github.repository }}
