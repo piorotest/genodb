@@ -17,7 +17,7 @@ jobs:
         with:
           action: "config"
           sysdba: "true"
-          database_host: docker
+          database_host: dockerpc
           database_port: 1521
           database_service: pdb1
           genusername: sys
