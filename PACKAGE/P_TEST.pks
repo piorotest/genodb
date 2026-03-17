@@ -11,6 +11,6 @@ create or replace package p_test AS
 
 
 	PROCEDURE ret_example_table;
-
+   -- null
 END p_test;
 /

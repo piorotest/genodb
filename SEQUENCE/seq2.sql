@@ -1,1 +1,1 @@
-create sequence seq2 minvalue 10
+create sequence seq2 minvalue 11

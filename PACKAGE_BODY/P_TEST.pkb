@@ -14,6 +14,6 @@ CREATE OR REPLACE  PACKAGE BODY p_test AS
     BEGIN
         NULL;
     END ret_example_table;
-
+    -- null
 end p_test;
 /
