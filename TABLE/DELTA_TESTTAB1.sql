@@ -1,1 +1,1 @@
-alter table TESTTAB1 add last_name varchar2(200);
+alter table TESTTAB1 add last_name varchar2(201);
