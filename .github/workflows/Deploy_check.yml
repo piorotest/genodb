@@ -3,9 +3,13 @@ name: Deploy_check
 on:
   pull_request:  # This ensures the action runs whenever a pull request is created or updated.
 
+permissions:
+  contents: write
+
 jobs:
   Deploy_check:
     runs-on: self-hosted  # Use the latest Ubuntu environment.
+    if: github.actor != 'robot'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
