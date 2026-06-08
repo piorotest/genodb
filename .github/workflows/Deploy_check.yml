@@ -4,7 +4,9 @@ on:
   pull_request:  # This ensures the action runs whenever a pull request is created or updated.
 
 permissions:
-  contents: write
+  contents: write.     # push a new code
+  pull-requests: write # Required to post comments on Pull Requests
+  issues: write        # Required because PR comments use the Issues API backend
 
 jobs:
   Deploy_check:
