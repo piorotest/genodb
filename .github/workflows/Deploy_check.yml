@@ -3,9 +3,15 @@ name: Deploy_check
 on:
   pull_request:  # This ensures the action runs whenever a pull request is created or updated.
 
+permissions:
+  contents: write      # update full table
+  pull-requests: write # Required to post comments on Pull Requests
+  issues: write        # Required because PR comments use the Issues API backend
+
 jobs:
   Deploy_check:
     runs-on: self-hosted  # Use the latest Ubuntu environment.
+    if: github.actor != 'robot'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
