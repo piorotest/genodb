@@ -11,7 +11,7 @@ permissions:
 jobs:
   Deploy_check:
     runs-on: self-hosted  # Use the latest Ubuntu environment.
-    if: github.actor != 'robot'
+    #if: github.actor != 'robot'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
