@@ -1,5 +1,9 @@
-create table testtab1 (
-  id number,
-  first_name varchar2(100),
-  last_name varchar2(200) -- test aaaaaaa aaaaaaaaaa 
-) tablespace users;
+CREATE TABLE "PIORO"."TESTTAB1" 
+   (	"ID" NUMBER, 
+	"FIRST_NAME" VARCHAR2(100), 
+	"LAST_NAME" VARCHAR2(301), 
+	"LAST_NAME2" VARCHAR2(301)
+   ) SEGMENT CREATION DEFERRED 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  TABLESPACE "USERS" ;
