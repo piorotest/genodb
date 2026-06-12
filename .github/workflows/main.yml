@@ -72,7 +72,7 @@ jobs:
         with:
           action: "config"
           sysdba: "true"
-          database_host: docker
+          database_host: dockerpc.lan
           database_port: 1521
           database_service: target
           genusername: sys
